@@ -104,13 +104,13 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 >
-> **_Réponse :_**  Comme on peut le voir dans la partie 3 EAP-TLS et PEAP sont proposées.
+> **_Réponse :_**  Comme on peut le voir dans la partie 3 EAP-TLS et EAP-PEAP sont proposées.
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 >
-> **_Réponse:_** EAP-TLS a été refusée par le client et c'est donc PEAP qui est utilisé
+> **_Réponse:_** EAP-TLS a été refusée par le client et c'est donc EAP-PEAP qui est utilisé
 
 ---
 
