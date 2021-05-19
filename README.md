@@ -23,7 +23,7 @@ __A faire en équipes de deux personnes__
 
 Les parties 2 et 3 sont optionnelles puisque vous ne disposez pas forcement du matériel nécessaire pour les réaliser.
 
-En principe, il devrait être possible de démarrer vos machines en Kali natif (à partir d'une clé USB, avec une distro live par exemple) ou d'employer une autre version de Linux. Si vous n'avez pas une interface WiFi USB externe, __vous ne pouvez pas faire ces parties dans une VM Linux__. 
+En principe, il devrait être possible de démarrer vos machines en Kali natif (à partir d'une clé USB, avec une distro live par exemple) ou d'employer une autre version de Linux. Si vous n'avez pas une interface WiFi USB externe, __vous ne pouvez pas faire ces parties dans une VM Linux__.
 
 Dans le cas où vous arriverais à tout faire pour démarrer un Linux natif, il existe toujours la possibilité que votre interface WiFi ne puisse pas être configurée en mode AP, ce qui à nouveau empêche le déroulement des parties 2 e 3.
 
@@ -37,7 +37,7 @@ Si vous vous lancez dans ces deux parties, voici quelques informations qui peuve
 nmcli radio wifi off
 rfkill unblock wlan
 ```
--	Pour pouvoir capturer une authentification complète, il faut se déconnecter d’un réseau et attendre 1 minute (timeout pour que l’AP « oublie » le client) 
+-	Pour pouvoir capturer une authentification complète, il faut se déconnecter d’un réseau et attendre 1 minute (timeout pour que l’AP « oublie » le client)
 -	Les échanges d’authentification entreprise peuvent être facilement trouvés utilisant le filtre d’affichage « ```eap``` » dans Wireshark
 
 
@@ -49,50 +49,87 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 
 - Comparer [la capture](files/auth.pcap) au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
 	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
+		-	Requête d'authentification du client
+			![Requête Authentification Client](./files/ImagePart1/RequeteAuthClient.PNG)
+		-  Réponse d’authentification de l'AP
+			![Reponse Authentification AP](./files/ImagePart1/ReponseAuthAP.PNG)
+	- Requête et réponse d’association (ou reassociation)
+		-	Requête d'association du client
+			![Requête Association Client](./files/ImagePart1/RequeteAssociationClient.PNG)
+		-	Reponse d'association de l'AP
+			![Reponse Association AP](./files/ImagePart1/ReponseAssociationAP.PNG)
 	- Négociation de la méthode d’authentification entreprise
+		-	Demande d'utilisation de la méthode EAP-TLS de la part de l'AP
+		![Requête méthode authentification AP](./files/ImagePart1/NegociationMethodeEAPTLS.PNG)
+		- Mais, le client refuse cette méthode et indique en réponse celle qu'il désire qui est EAP-PEAP
+		![Requête méthode authentification Client](./files/ImagePart1/NegociationMethodeEAPPEAPClient.PNG)
+		- L'AP refait une requête pour choisir la méthode d'authentification mais cette fois-ci avec EAP-PEAP
+		![Requête méthode authentification AP après choix du client](./files/ImagePart1/NegociationMethodeEAPPEAPAP.PNG)
 	- Phase d’initiation. Arrivez-vous à voir l’identité du client ?
+		- Tout d'abord l'AP fais une demande au client de s'authentifier
+		![Initiation AP](./files/ImagePart1/InitiationAP.PNG)
+		- Le client répond aves son identifiant qui est einet\\joel.gonin. L'identification Anonyme n'est donc pas utilisée ici.
+		![Initiation AP](./files/ImagePart1/InitiationClient.PNG)
 	- Phase hello :
-		- Version TLS
+		- Version TLS. La version 1.2 est utilisée ici
+		![TLS Version](./files/ImagePart1/TLSVersionHello.PNG)
 		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+			- Suites cryptographiques proposée par le Client
+			![Cipher Suite Client](./files/ImagePart1/CipherSuiteClient.PNG)
+			- Le client ne va proposer aucune méthode de compression
+			![Cipher Suite Client](./files/ImagePart1/CompressionMethodClient.PNG)
+			- Le serveur en réponse ne va donc pas avoir de méthode de compression et va choisir la suite TLS_RSA_WITH_AES_256_CDB_SHA
+			![Cipher Suite Hello Server](./files/ImagePart1/ResponseHelloServ.PNG)
 		- Nonces
+			- Nonce du client
+			![Nonce Client](./files/ImagePart1/NonceClient.PNG)
+			- Nonce du serveur
+			![Nonce Serveur](./files/ImagePart1/NonceServeur.PNG)
 		- Session ID
+			- Session ID du client
+			![Session ID Client](./files/ImagePart1/SessionIDClient.PNG)
+			- Session ID du Serveur
+			![Session ID Serveur](./files/ImagePart1/SessionIDServeur.PNG)
 	- Phase de transmission de certificats
-	 	- Echanges des certificats
+		- Echanges des certificats. Comme le protocole EAP-PEAP est utilisé ici seul le serveur envoie un certificat
+		![Certificat Serveur](./files/ImagePart1/CertificateServ.PNG)
 		- Change cipher spec
+		![Change Cipher Spec](./files/ImagePart1/ChangeCipherServeur.PNG)
 	- Authentification interne et transmission de la clé WPA (échange chiffré, vu comme « Application data »)
+	![Authentification et transmission clé WPA](./files/ImagePart1/AuthEtTransmissionWPA.PNG)
 	- 4-way handshake
+	![4 Way handshake](./files/ImagePart1/4WayHandshake.PNG)
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_**  Comme on peut le voir dans la partie 3 EAP-TLS et PEAP sont proposées.
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** EAP-TLS a été refusée par le client et c'est donc PEAP qui est utilisé
 
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
-> 
+>
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
-> 
+>
+> **_Réponse:_** Oui il envoie un certificat pour que le client puisse authentifier le serveur.
+>
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
-> 
+>
+> **_Réponse:_** Non cela n'est pas prévu dans EAP-PEAP. De plus, comme nous pouvons le voir avec les captures ci-dessus seul le certificat serveur a été trouvé. Le client aurait dû envoyer un certificat si la méthode d'authentification EAP-TLS avait été utilisée.
+>
 
 ---
 
 ### 2. (__Optionnel__) Attaque WPA Entreprise (hostapd)
 
-Les réseaux utilisant une authentification WPA Entreprise sont considérés aujourd’hui comme étant très surs. En effet, puisque la Master Key utilisée pour la dérivation des clés WPA est générée de manière aléatoire dans le processus d’authentification, les attaques par dictionnaire ou brute-force utilisés sur WPA Personnel ne sont plus applicables. 
+Les réseaux utilisant une authentification WPA Entreprise sont considérés aujourd’hui comme étant très surs. En effet, puisque la Master Key utilisée pour la dérivation des clés WPA est générée de manière aléatoire dans le processus d’authentification, les attaques par dictionnaire ou brute-force utilisés sur WPA Personnel ne sont plus applicables.
 
 Il existe pourtant d’autres moyens pour attaquer les réseaux Entreprise, se basant sur une mauvaise configuration d’un client WiFi. En effet, on peut proposer un « evil twin » à la victime pour l’attirer à se connecter à un faux réseau qui nous permette de capturer le processus d’authentification interne. Une attaque par brute-force peut être faite sur cette capture, beaucoup plus vulnérable d’être craquée qu’une clé WPA à 256 bits, car elle est effectuée sur le compte d’un utilisateur.
 
@@ -109,23 +146,23 @@ Pour implémenter l’attaque :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_**
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john pour craquer le handshake ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_**
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
-> 
+>
 > **_Réponse:_**
 
 
-### 3. (__Optionnel__) GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
+### 3. (__Optionnel__) GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer)
 
 [EAPHammer](https://github.com/s0lst1c3/eaphammer) est un outil de nouvelle génération pour les attaques WPA Entreprise. Il peut en particulier faire une attaque de downgrade GTC, pour tenter de capturer les identifiants du client en clair, ce qui évite le besoin de l'attaque par dictionnaire.
 
@@ -138,14 +175,14 @@ Pour implémenter l’attaque :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_**
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_**
 
 
 ## Livrables
