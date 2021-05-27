@@ -66,7 +66,7 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 		- L'AP refait une requête pour choisir la méthode d'authentification mais cette fois-ci avec EAP-PEAP
 		![Requête méthode authentification AP après choix du client](./files/ImagePart1/NegociationMethodeEAPPEAPAP.PNG)
 	- Phase d’initiation. Arrivez-vous à voir l’identité du client ?
-		- Tout d'abord l'AP fais une demande au client de s'authentifier
+		- Tout d'abord l'AP fait une demande au client de s'authentifier
 		![Initiation AP](./files/ImagePart1/InitiationAP.PNG)
 		- Le client répond aves son identifiant qui est einet\\joel.gonin. L'identification Anonyme n'est donc pas utilisée ici.
 		![Initiation AP](./files/ImagePart1/InitiationClient.PNG)
@@ -110,7 +110,7 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 >
-> **_Réponse:_** EAP-TLS a été refusée par le client et c'est donc EAP-PEAP qui est utilisé
+> **_Réponse:_** EAP-TLS a été refusée par le client et c'est donc EAP-PEAP qui est utilisée
 
 ---
 
@@ -122,7 +122,7 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 >
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 >
-> **_Réponse:_** Non cela n'est pas prévu dans EAP-PEAP. De plus, comme nous pouvons le voir avec les captures ci-dessus seul le certificat serveur a été trouvé. Le client aurait dû envoyer un certificat si la méthode d'authentification EAP-TLS avait été utilisée.
+> **_Réponse:_** Non cela n'est pas prévu dans EAP-PEAP. De plus, comme nous pouvons le voir avec les captures ci-dessus seul le certificat serveur a été trouvé. Le client aurait dû envoyer un certificat seulement si la méthode d'authentification EAP-TLS avait été utilisée.
 >
 
 ---
@@ -176,7 +176,7 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
 >
-> **_Réponse :_**
+> **_Réponse :_** Le but de cette attaque va être de forcer les clients à utiliser la méthode EAP-GTC. Cette méthode demande un one time password au client et envoie la réponse en clair sur le réseau. Le problème de ce protocole est que le client en recevant ce prompt peut penser que le mot de passe demandé est le mot de passe de son compte et donc s'il le rentre à ce moment là il passera en clair sur le réseau. 
 
 ---
 
