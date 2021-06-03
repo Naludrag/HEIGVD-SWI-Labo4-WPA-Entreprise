@@ -147,19 +147,20 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 >
-> **_Réponse :_**
+> **_Réponse :_** Nous avons simplement dû modifier le SSID et l'interface de la configuration par défaut de hostapd-wpe.
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john pour craquer le handshake ?
 >
-> **_Réponse:_**
+> **_Réponse:_** Le type de hash *netntlm* a été indiqué à john pour craquer le hash.  
+![John](./files/john_crack.png)
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 >
-> **_Réponse:_**
+> **_Réponse:_** Les méthodes suivantes sont supportées: EAP-FAST/MSCHAPv2, PEAP/MSCHAPv2, EAP-TTLS/MSCHAPv2, EAP-TTLS/MSCHAP, EAP-TTLS/CHAP, EAP-TTLS/PAP.
 
 
 ### 3. (__Optionnel__) GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer)
@@ -176,14 +177,13 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
 >
-> **_Réponse :_** Le but de cette attaque va être de forcer les clients à utiliser la méthode EAP-GTC. Cette méthode demande un one time password au client et envoie la réponse en clair sur le réseau. Le problème de ce protocole est que le client en recevant ce prompt peut penser que le mot de passe demandé est le mot de passe de son compte et donc s'il le rentre à ce moment là il passera en clair sur le réseau. 
+> **_Réponse :_** Le but de cette attaque va être de forcer les clients à utiliser la méthode EAP-GTC. Cette méthode demande un one time password au client et envoie la réponse en clair sur le réseau. Le problème de ce protocole est que le client en recevant ce prompt peut penser que le mot de passe demandé est le mot de passe de son compte et donc s'il le rentre à ce moment là il passera en clair sur le réseau.
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 >
-> **_Réponse:_**
-
+> **_Réponse:_** hostapd-wpe semble être un outil très pratique pour effectuer des attaques sur WPA2 Entreprise. Un point négatif est que les attaques sur un réseau utilisant MSCHAPv2 ne sont pas très discrète, car le client n'arrive pas se connecter. Ceci est toutefois dû au protocole et non pas directement à hostapd-wpe.
 
 ## Livrables
 
