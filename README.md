@@ -151,6 +151,7 @@ Pour implémenter l’attaque :
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 >
 > **_Réponse :_** Nous avons simplement dû modifier le SSID et l'interface de la configuration par défaut de hostapd-wpe.
+![Config](./files/ImagePart3/swi_config.png)
 
 ---
 
