@@ -157,7 +157,7 @@ Pour implémenter l’attaque :
 > **_Question:_** Quel type de hash doit-on indiquer à john pour craquer le handshake ?
 >
 > **_Réponse:_** Le type de hash *netntlm* a été indiqué à john pour craquer le hash.  
-![John](./files/john_crack.png)
+![John](./files/ImagePart3/john_crack.png)
 
 ---
 
