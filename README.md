@@ -71,24 +71,27 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 		- Le client répond aves son identifiant qui est einet\\joel.gonin. L'identification Anonyme n'est donc pas utilisée ici.
 		![Initiation AP](./files/ImagePart1/InitiationClient.PNG)
 	- Phase hello :
-		- Version TLS. La version 1.2 est utilisée ici
-		![TLS Version](./files/ImagePart1/TLSVersionHello.PNG)
+		- Version TLS.
+			- La version 1.2 est utilisée ici par le client
+			![TLS Version](./files/ImagePart1/TLSVersionHello.PNG)
+			- La version 1 est utilisée par le serveur
+			![TLS Version](./files/ImagePart1/TLSVersionServerHello.PNG)
 		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
 			- Suites cryptographiques proposée par le Client
 			![Cipher Suite Client](./files/ImagePart1/CipherSuiteClient.PNG)
 			- Le client ne va proposer aucune méthode de compression
 			![Cipher Suite Client](./files/ImagePart1/CompressionMethodClient.PNG)
-			- Le serveur en réponse ne va donc pas avoir de méthode de compression et va choisir la suite TLS_RSA_WITH_AES_256_CDB_SHA
+			- Le serveur en réponse ne va donc pas avoir de méthode de compression et va choisir la suite TLS\_RSA\_WITH\_AES\_256\_CDB\_SHA
 			![Cipher Suite Hello Server](./files/ImagePart1/ResponseHelloServ.PNG)
 		- Nonces
-			- Nonce du client
+			- Nonce du client  
 			![Nonce Client](./files/ImagePart1/NonceClient.PNG)
-			- Nonce du serveur
+			- Nonce du serveur  
 			![Nonce Serveur](./files/ImagePart1/NonceServeur.PNG)
 		- Session ID
-			- Session ID du client
+			- Session ID du client  
 			![Session ID Client](./files/ImagePart1/SessionIDClient.PNG)
-			- Session ID du Serveur
+			- Session ID du Serveur  
 			![Session ID Serveur](./files/ImagePart1/SessionIDServeur.PNG)
 	- Phase de transmission de certificats
 		- Echanges des certificats. Comme le protocole EAP-PEAP est utilisé ici seul le serveur envoie un certificat
@@ -176,7 +179,7 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
 >
-> **_Réponse :_** Le but de cette attaque va être de forcer les clients à utiliser la méthode EAP-GTC. Cette méthode demande un one time password au client et envoie la réponse en clair sur le réseau. Le problème de ce protocole est que le client en recevant ce prompt peut penser que le mot de passe demandé est le mot de passe de son compte et donc s'il le rentre à ce moment là il passera en clair sur le réseau. 
+> **_Réponse :_** Le but de cette attaque va être de forcer les clients à utiliser la méthode EAP-GTC. Cette méthode demande un one time password au client et envoie la réponse en clair sur le réseau. Le problème de ce protocole est que le client en recevant ce prompt peut penser que le mot de passe demandé est le mot de passe de son compte et donc s'il le rentre à ce moment là il passera en clair sur le réseau.
 
 ---
 
