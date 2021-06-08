@@ -47,7 +47,8 @@ rfkill unblock wlan
 
 Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](files/auth.pcap) avec Wireshark et fournir des captures d’écran indiquant dans chaque capture les données demandées.
 
-- Comparer [la capture](files/auth.pcap) au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
+- Comparer [la capture](files/auth.pcap) au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :  
+Dans toute les captures ci-dessous les communications se feront entre l'authentificateur `Cisco_60:bf:50` et le supplicant `HuaweiTe_70:df:32`.
 	- Requête et réponse d’authentification système ouvert
 		-	Requête d'authentification du client
 			![Requête Authentification Client](./files/ImagePart1/RequeteAuthClient.PNG)
@@ -74,7 +75,7 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 		- Version TLS.
 			- La version 1.2 est utilisée ici par le client
 			![TLS Version](./files/ImagePart1/TLSVersionHello.PNG)
-			- La version 1.0 est utilisée par le serveur
+			- La version 1.0 est ensuite utilisée par le serveur
 			![TLS Version](./files/ImagePart1/TLSVersionServerHello.PNG)
 		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
 			- Suites cryptographiques proposée par le Client
@@ -125,7 +126,7 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 >
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 >
-> **_Réponse:_** Non cela n'est pas prévu dans EAP-PEAP. De plus, comme nous pouvons le voir avec les captures ci-dessus seul le certificat serveur a été trouvé. Le client aurait dû envoyer un certificat si la méthode d'authentification EAP-TLS avait été utilisée.
+> **_Réponse:_** Non cela n'est pas prévu dans EAP-PEAP. De plus, comme nous pouvons le voir avec les captures ci-dessus seul le certificat serveur a été trouvé. Le client aurait dû envoyer un certificat si la méthode d'authentification EAP-TLS avait été utilisée. Le client est authentifié lors de la phase d'authentification interne grâce à MSCHAPv2 et donc aucun certificat n'a besoin d'être envoyé pour vérifier son authenticité.
 >
 
 ---
