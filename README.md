@@ -68,13 +68,13 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 	- Phase d’initiation. Arrivez-vous à voir l’identité du client ?
 		- Tout d'abord l'AP fait une demande au client de s'authentifier
 		![Initiation AP](./files/ImagePart1/InitiationAP.PNG)
-		- Le client répond aves son identifiant qui est einet\\joel.gonin. L'identification Anonyme n'est donc pas utilisée ici.
+		- Le client répond aves son identifiant qui est einet\\joel.gonin.
 		![Initiation AP](./files/ImagePart1/InitiationClient.PNG)
 	- Phase hello :
 		- Version TLS.
 			- La version 1.2 est utilisée ici par le client
 			![TLS Version](./files/ImagePart1/TLSVersionHello.PNG)
-			- La version 1 est utilisée par le serveur
+			- La version 1.0 est utilisée par le serveur
 			![TLS Version](./files/ImagePart1/TLSVersionServerHello.PNG)
 		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
 			- Suites cryptographiques proposée par le Client
@@ -125,7 +125,7 @@ Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](
 >
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 >
-> **_Réponse:_** Non cela n'est pas prévu dans EAP-PEAP. De plus, comme nous pouvons le voir avec les captures ci-dessus seul le certificat serveur a été trouvé. Le client aurait dû envoyer un certificat seulement si la méthode d'authentification EAP-TLS avait été utilisée.
+> **_Réponse:_** Non cela n'est pas prévu dans EAP-PEAP. De plus, comme nous pouvons le voir avec les captures ci-dessus seul le certificat serveur a été trouvé. Le client aurait dû envoyer un certificat si la méthode d'authentification EAP-TLS avait été utilisée.
 >
 
 ---
