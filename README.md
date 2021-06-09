@@ -48,7 +48,7 @@ rfkill unblock wlan
 Dans cette première partie, vous allez analyser [une connexion WPA Entreprise](files/auth.pcap) avec Wireshark et fournir des captures d’écran indiquant dans chaque capture les données demandées.
 
 - Comparer [la capture](files/auth.pcap) au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :  
-Dans toute les captures ci-dessous les communications se feront entre l'authentificateur `Cisco_60:bf:50` et le supplicant `HuaweiTe_70:df:32`.
+Dans toute les captures ci-dessous, les communications se feront entre l'authentificateur `Cisco_60:bf:50` et le supplicant `HuaweiTe_70:df:32`.
 	- Requête et réponse d’authentification système ouvert
 		-	Requête d'authentification du client
 			![Requête Authentification Client](./files/ImagePart1/RequeteAuthClient.PNG)
