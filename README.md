@@ -10,7 +10,7 @@
 
 ## Laboratoire 802.11 Sécurité WPA Entreprise
 
-__A faire en équipes de deux personnes__
+**Auteurs: Robin Müller, Stéphane Teixeira Carvalho**
 
 ### Objectif :
 
